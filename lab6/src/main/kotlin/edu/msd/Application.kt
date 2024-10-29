@@ -4,8 +4,7 @@ import edu.msd.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object DBSettings {
@@ -16,6 +15,18 @@ object DBSettings {
     fun init() {
         transaction(db) {
             SchemaUtils.create(User, Book, Likes, Post)
+            User.insert{
+//                for testing
+            }
+            Post.insert{
+//                for testing
+                it[content] = "Test post content"
+                it[timestamp] = System.currentTimeMillis()
+            }
+//            Post.select { Post.content eq "Test post content" }
+//                .single()
+//
+
         }
     }
 }
